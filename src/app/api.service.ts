@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -8,11 +8,14 @@ import {Observable} from 'rxjs';
 export class ApiService {
 	constructor(private http: HttpClient) { }
 	getProducts() {
+		const headers = new HttpHeaders().set('Authorization', `${this.currentUserToken}`);
 		return this.http.get(
-			'http://localhost:3000/api/products');
+			'http://localhost:3000/api/products',{headers:headers});
 	}
 
 	addProduct(product: any): Observable<any> {
+		if(this.currentUserToken!=='')
+		product.userToken= this.currentUserToken;
 		return this.http.post('http://localhost:3000/api/products',product);
 	}
 
@@ -23,4 +26,6 @@ export class ApiService {
 	deleteProduct(id: string): Observable<any> {
 		return this.http.delete('http://localhost:3000/api/products/'+id)
 	}
+
+	public currentUserToken: string | undefined | null;
 }

@@ -25,7 +25,11 @@ export class AppComponent {
   showDiv: boolean = false;
 
   toggleDivVisibility(): void {
-    this.showDiv = !this.showDiv;
+    if(this.apiService.currentUserToken){
+      this.showDiv = !this.showDiv;
+      this.handleClick();
+    }
+      else alert("Please LogIn !");
   }
   displayedColumns: string[] = [
     '_id',
@@ -44,20 +48,26 @@ export class AppComponent {
     private _coreService: CoreService,
     ) {};
 
+    logout(){
+      window.location.reload();
+    }
+
   openAddEditProductForm() {
-    this._dialog.open(ProductAddEditComponent);
+    if(this.apiService.currentUserToken)
+      this._dialog.open(ProductAddEditComponent);
+      else alert("Please LogIn!");
   }
 
   //for displaying response from Express server
   products: any;
-  ngOnInit() {
-    this.apiService.getProducts().subscribe(data =>{
-      this.products = data;
-      this.dataSource = new MatTableDataSource(this.products);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    });
-  }
+  // ngOnInit() {
+  //   this.apiService.getProducts().subscribe(data =>{
+  //     this.products = data;
+  //     this.dataSource = new MatTableDataSource(this.products);
+  //     this.dataSource.sort = this.sort;
+  //     this.dataSource.paginator = this.paginator;
+  //   });
+  // }
 
   handleClick(){
     this.apiService.getProducts().subscribe(data =>{
@@ -78,7 +88,7 @@ export class AppComponent {
   }
 
   refreshData() {
-    this.ngOnInit();
+    this.handleClick();
   }
 
   deleteProduct(id: string) {

@@ -20,11 +20,15 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatDividerModule} from '@angular/material/divider';
+import { LoginComponent } from './login/login.component';
+import { SigninComponent } from './signin/signin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProductAddEditComponent
+    ProductAddEditComponent,
+    LoginComponent,
+    SigninComponent
   ],
   imports: [
     BrowserModule,

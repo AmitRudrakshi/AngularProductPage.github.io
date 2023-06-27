@@ -10,17 +10,18 @@
   <span class="example-spacer"></span>
   <button mat-raised-button (click)="openAddEditProductForm()">
     ADD Product</button>
+    <button class="btn btn-danger mx-2" (click)="logout()" [hidden]="showDiv">Logout</button>
 </mat-toolbar>
 
-<mat-sidenav-container (click)="handleClick()">
+<mat-sidenav-container>
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-    <button mat-button class="menu-button" (click)="toggleDivVisibility()" color="white">
+    <button mat-button class="menu-button" (click)="toggleDivVisibility();sidenav.toggle();" color="white">
       <mat-icon>view_list</mat-icon>
       <span>Products</span>
     </button>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div class="main-body" [hidden]="showDiv">
+    <div class="main-body" [hidden]="showDiv" (click)="handleClick()">
         <mat-form-field>
           <mat-label>Search</mat-label>
           <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Product 1" #input>
